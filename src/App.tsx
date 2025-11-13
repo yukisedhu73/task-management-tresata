@@ -1,34 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import TodoPage from './pages/TodoPage'
+import AddEditPage from './pages/AddEditPage'
+import type { Task } from './types/task'
+import { loadTasks, saveTasks } from './utils/storage'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([])
+
+  useEffect(() => {
+    setTasks(loadTasks())
+  }, [])
+
+  useEffect(() => {
+    saveTasks(tasks)
+  }, [tasks])
+
+  const addTask = (task: Task) => setTasks(prev => [task, ...prev])
+  const updateTask = (updated: Task) => setTasks(prev => prev.map(t => t.id === updated.id ? updated : t))
+  const deleteTask = (id: string) => setTasks(prev => prev.filter(t => t.id !== id))
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Routes>
+      <Route path='/' element={<TodoPage tasks={tasks} onDelete={deleteTask} onUpdate={updateTask} />} />
+      <Route path='/add' element={<AddEditPage mode='add' onSave={addTask} />} />
+      <Route path='/edit/:id' element={<AddEditPage mode='edit' tasks={tasks} onSave={updateTask} onDelete={deleteTask} />} />
+    </Routes>
   )
 }
 
