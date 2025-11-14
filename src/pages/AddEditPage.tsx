@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../components/Header'
 import type { Task, TaskStatus } from '../types/task'
 import { v4 as uuidv4 } from 'uuid'
+import StatusDropdown from '../components/StatusDropdown'
 
 interface Props {
     mode: 'add' | 'edit'
@@ -19,6 +20,7 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave, onDelete }) =>
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [status, setStatus] = useState<TaskStatus>('Pending')
+    const [showConfirm, setShowConfirm] = useState(false)
 
     useEffect(() => {
         if (editing) {
@@ -33,43 +35,83 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave, onDelete }) =>
 
     const onSubmit = () => {
         if (!title.trim()) return alert('Please enter a title')
-        if (editing) {
-            onSave({ id: id!, title: title.trim(), description: description.trim(), status, date: new Date().toISOString() })
-        } else {
-            onSave({ id: uuidv4(), title: title.trim(), description: description.trim(), status, date: new Date().toISOString() })
+
+        const normalized: Task = {
+            id: editing ? id! : uuidv4(),
+            title: title.trim(),
+            description: description.trim(),
+            status,
+            date: new Date().toISOString()
         }
+
+        onSave(normalized)
         nav('/')
     }
 
     const handleDelete = () => {
         if (!id || !onDelete) return
-        if (confirm('Delete this task?')) {
-            onDelete(id)
-            nav('/')
-        }
+        onDelete(id)
+        nav('/')
     }
 
     return (
-        <div className='page'>
-            <Header title={mode === 'add' ? 'Add Task' : 'Edit Task'} onBack={() => nav('/')} showBack={true} />
-            <div className='container'>
-                <div className='form-row'>
-                    <input value={title} onChange={e => setTitle(e.target.value)} placeholder={mode === 'add' ? 'Enter the title' : ''} />
-                </div>
-                <div className='form-row'>
-                    <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder='Enter the description' rows={4} />
+        <div className="page">
+            <Header title={mode === 'add' ? 'Add Task' : 'Edit Task'} showBack onBack={() => nav('/')} />
+
+            <div className="container">
+                <div className="form-row">
+                    <input
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        placeholder="Enter the title"
+                    />
                 </div>
 
-                <div style={{ display: 'flex', gap: 12 }}>
-                    <button className='btn-outline' onClick={() => nav('/')}>Cancel</button>
-                    <div style={{ flex: 1 }} />
-                    {mode === 'edit' && (
-                        <button className='btn-outline danger' onClick={handleDelete}>Delete</button>
+                <div className="form-row">
+                    <textarea
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                        placeholder="Enter the description"
+                        rows={4}
+                    />
+                </div>
+
+                {/* STATUS DROPDOWN ONLY IN EDIT MODE */}
+                {mode === 'edit' && (
+                    <div className="form-row">
+                        <StatusDropdown value={status} onChange={setStatus} />
+                    </div>
+                )}
+
+                <div className="button-row">
+                    <button className="btn-outline" onClick={() => nav('/')}>Cancel</button>
+                    <div style={{ flex: 1 }}></div>
+
+                    {editing && (
+                        <button className="btn-outline danger" onClick={() => setShowConfirm(true)}>
+                            Delete
+                        </button>
                     )}
-                    <button className='btn-primary' onClick={onSubmit}>{mode === 'add' ? 'ADD' : 'Update'}</button>
-                </div>
 
+                    <button className="btn-primary" onClick={onSubmit}>
+                        {mode === 'add' ? 'ADD' : 'Update'}
+                    </button>
+                </div>
             </div>
+
+            {/* CUSTOM CONFIRM MODAL */}
+            {showConfirm && (
+                <div className="confirm-overlay">
+                    <div className="confirm-box">
+                        <p>Are you sure you want to delete this task?</p>
+
+                        <div className="confirm-actions">
+                            <button className="btn-outline" onClick={() => setShowConfirm(false)}>Cancel</button>
+                            <button className="btn-primary danger" onClick={handleDelete}>Delete</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

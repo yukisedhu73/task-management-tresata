@@ -12,7 +12,7 @@ const Header: React.FC<Props> = ({ title, onBack, showBack = true }) => {
       <div className='header-inner'>
         {showBack ? (
           <button className='back-btn' onClick={onBack}>&larr;</button>
-        ) : <div style={{width: 40}} />}
+        ) : <div />}
         <div className='header-title'>{title}</div>
         <div style={{width: 40}} />
       </div>

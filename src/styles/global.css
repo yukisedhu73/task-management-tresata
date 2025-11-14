@@ -7,7 +7,7 @@
     --completed-dot: #368A04;
     --text-dark: #1f2937;
     --muted: #6b7280;
-    --radius: 8px;
+    --radius: 3px;
     --border-radius: 8px;
     --transition: 0.2s ease;
     font-family: "Inter", sans-serif;
@@ -67,7 +67,7 @@ body {
 
 .search-input {
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 3px;
     border: 1px solid #e5e7eb;
     width: 100%;
 }
@@ -75,7 +75,7 @@ body {
 .section {
     margin-bottom: 12px;
     background: var(--bg-light);
-    border-radius: 8px;
+    border-radius: 3px;
     overflow: hidden;
 }
 
@@ -91,7 +91,8 @@ body {
 }
 
 .section-body {
-    padding: 12px;
+    padding: 0px;
+    margin-top: 10px;
 }
 
 .chev {
@@ -108,11 +109,11 @@ body {
     align-items: flex-start;
     padding: 12px;
     background: white;
-    border-radius: 8px;
+    border-radius: 3px;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    transition: background .12s ease, transform .12s ease;
+    transition:#fff;
     border: 1px solid transparent;
-    margin-bottom: 12px;
+    /* margin-bottom: 12px; */
 }
 
 .task-card.hover {
@@ -192,7 +193,7 @@ body {
     background: transparent;
     padding: 6px;
     cursor: pointer;
-    border-radius: 6px
+    border-radius: 3px
 }
 
 .icon-btn.delete {
@@ -204,7 +205,7 @@ body {
     color: white;
     border: none;
     padding: 10px 16px;
-    border-radius: 8px;
+    border-radius: 3px;
     min-width: 88px
 }
 
@@ -213,7 +214,7 @@ body {
     color: var(--primary-blue);
     background: transparent;
     padding: 10px 16px;
-    border-radius: 8px
+    border-radius: 3px
 }
 
 .btn-outline.danger {
@@ -241,10 +242,198 @@ body {
 
 input,
 textarea {
+    width: 100%;
     border: 1px solid #e5e7eb;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 3px;
 }
+
+.button-row{
+    display: flex;
+    justify-content: space-around;
+}
+
+/* Status dropdown */
+.status-dd-wrapper {
+    width: 100%;
+}
+
+.status-dd-header {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-dd-body {
+    border: 1px solid #ddd;
+    background: white;
+    margin-top: 6px;
+    border-radius: 3px;
+}
+
+.status-dd-item {
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.status-dd-item:hover {
+    background: var(--bg-hover);
+}
+
+.status-dd-item.active {
+    background: var(--bg-light);
+}
+
+/* Task card hover behavior */
+/* Task card container */
+.task-card {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 3px;
+    background: white;
+    border: 1px solid #eee;
+    /* margin-bottom: 12px; */
+    transition: 0.2s;
+}
+
+.task-card.hover {
+    background: var(--bg-hover);
+}
+
+/* Avatar */
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--primary-blue);
+    flex-shrink: 0;
+}
+
+/* Main content */
+.task-info {
+    flex: 1;
+    cursor: pointer;
+}
+
+/* Row 1 */
+.task-row-1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-title {
+    color: var(--primary-blue);
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Status */
+.task-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* Row 2 */
+.task-desc {
+    margin: 30px 0;
+    color: #444;
+}
+
+/* ROW 3 layout */
+/* This guarantees LEFT content + RIGHT content */
+.task-row-3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+}
+
+/* LEFT: Date */
+.task-date {
+    margin: 0;
+    font-size: 13px;
+    color: #999;
+}
+
+/* RIGHT: Two action buttons side-by-side */
+.task-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 0px !important;
+    min-width: 80px;
+    /* prevents collapsing */
+}
+
+/* ICON BUTTON */
+.icon-btn {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.icon-btn img {
+    width: 18px;
+    height: 18px;
+}
+
+/* RED DELETE ICON */
+.icon-btn.delete img {
+    filter: none;
+}
+
+
+/* modal */
+.confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-box {
+    background: white;
+    padding: 20px;
+    border-radius: 3px;
+    width: 80%;
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
 
 /* small responsive tweaks */
 @media (max-width: 520px) {

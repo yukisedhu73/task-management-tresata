@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import type { Task } from '../types/task'
 import TaskItem from './TaskItem'
+import downArw from '../assets/downArw.svg'
+import upArw from '../assets/upArw.svg'
 
 interface Props {
     tasks: Task[]
@@ -11,13 +13,20 @@ interface Props {
 }
 
 const Section: React.FC<{ title: string; count: number; children: React.ReactNode }> = ({ title, count, children }) => {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false) // ← CLOSED by default
+
     return (
         <div className='section'>
             <button className='section-header' onClick={() => setOpen(s => !s)}>
                 <span>{title} ({count})</span>
-                <span className={`chev ${open ? 'open' : ''}`}>&#x25BC;</span>
+
+                <img
+                    src={open ? upArw : downArw}
+                    className="dd-arrow"
+                    alt="dropdown arrow"
+                />
             </button>
+
             {open && <div className='section-body'>{children}</div>}
         </div>
     )
