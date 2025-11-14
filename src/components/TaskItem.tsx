@@ -3,6 +3,7 @@ import type { Task } from "../types/task"
 import PencilIcon from "../assets/Pencil.svg"
 import TrashIcon from "../assets/Trash.svg"
 import { formatDate } from "../utils/formatDate"
+import toast from "react-hot-toast"
 
 interface Props {
     task: Task
@@ -29,6 +30,7 @@ const TaskItem: React.FC<Props> = ({ task, onEdit, onDelete }) => {
 
     const handleDelete = () => {
         onDelete()
+        toast.error("Task Deleted!")
         setShowConfirm(false)
     }
 
@@ -122,7 +124,6 @@ const TaskItem: React.FC<Props> = ({ task, onEdit, onDelete }) => {
                     </div>
                 </div>
             )}
-
         </>
     )
 }

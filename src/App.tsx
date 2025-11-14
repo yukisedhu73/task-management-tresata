@@ -57,7 +57,6 @@ const App: React.FC = () => {
             mode="edit"
             tasks={tasks}
             onSave={updateTask}
-            onDelete={deleteTask}
           />
         }
       />

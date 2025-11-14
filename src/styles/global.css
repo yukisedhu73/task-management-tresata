@@ -431,6 +431,19 @@ textarea {
     margin-top: 20px;
 }
 
+/* input errors style  */
+.input-error {
+    border: 1px solid #e63946 !important;
+    background: #fff2f2;
+}
+
+.error-text {
+    color: #e63946;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+
 
 /* small responsive tweaks */
 @media (max-width: 520px) {

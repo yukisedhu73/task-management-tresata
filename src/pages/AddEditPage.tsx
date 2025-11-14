@@ -4,12 +4,12 @@ import Header from '../components/Header'
 import type { Task, TaskStatus } from '../types/task'
 import { v4 as uuidv4 } from 'uuid'
 import StatusDropdown from '../components/StatusDropdown'
+import toast from 'react-hot-toast'
 
 interface Props {
     mode: 'add' | 'edit'
     tasks?: Task[]
     onSave: (task: Task) => void
-    onDelete?: (id: string) => void
 }
 
 const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
@@ -20,6 +20,11 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [status, setStatus] = useState<TaskStatus>('Pending')
+
+    // NEW ERROR STATES
+    const [titleError, setTitleError] = useState('')
+    const [descriptionError, setDescriptionError] = useState('')
+
     useEffect(() => {
         if (editing) {
             const t = tasks.find(x => x.id === id)
@@ -32,7 +37,25 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
     }, [editing, id, tasks])
 
     const onSubmit = () => {
-        if (!title.trim()) return alert('Please enter a title')
+        let hasError = false
+
+        // reset errors
+        setTitleError('')
+        setDescriptionError('')
+
+        // validate title
+        if (!title.trim()) {
+            setTitleError('Title is required.')
+            hasError = true
+        }
+
+        // validate description
+        if (!description.trim()) {
+            setDescriptionError('Description is required.')
+            hasError = true
+        }
+
+        if (hasError) return
 
         const normalized: Task = {
             id: editing ? id! : uuidv4(),
@@ -43,6 +66,7 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
         }
 
         onSave(normalized)
+        toast.success(editing ? "Task Updated!" : "Task Added!")
         nav('/')
     }
 
@@ -51,21 +75,34 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
             <Header title={mode === 'add' ? 'Add Task' : 'Edit Task'} showBack onBack={() => nav('/')} />
 
             <div className="container">
+
+                {/* TITLE FIELD */}
                 <div className="form-row">
                     <input
+                        className={titleError ? 'input-error' : ''}
                         value={title}
-                        onChange={e => setTitle(e.target.value)}
+                        onChange={e => {
+                            setTitle(e.target.value)
+                            if (titleError) setTitleError('')
+                        }}
                         placeholder="Enter the title"
                     />
+                    {titleError && <p className="error-text">{titleError}</p>}
                 </div>
 
+                {/* DESCRIPTION FIELD */}
                 <div className="form-row">
                     <textarea
+                        className={descriptionError ? 'input-error' : ''}
                         value={description}
-                        onChange={e => setDescription(e.target.value)}
+                        onChange={e => {
+                            setDescription(e.target.value)
+                            if (descriptionError) setDescriptionError('')
+                        }}
                         placeholder="Enter the description"
                         rows={4}
                     />
+                    {descriptionError && <p className="error-text">{descriptionError}</p>}
                 </div>
 
                 {/* STATUS DROPDOWN ONLY IN EDIT MODE */}
