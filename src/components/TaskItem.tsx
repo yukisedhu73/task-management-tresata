@@ -38,19 +38,17 @@ const TaskItem: React.FC<Props> = ({ task, onEdit, onDelete }) => {
     return (
         <>
             <div
-                className={`task-card ${hover ? "hover" : ""}`}
+                className={`task-card ${hover ? "hover" : ""} ${task.status === "Completed" ? "completed" : ""}`}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
-                {/* LEFT AVATAR */}
+
                 <div className="avatar">
                     {task.title.charAt(0).toUpperCase()}
                 </div>
 
                 {/* MAIN CONTENT */}
                 <div className="task-info" onClick={onEdit}>
-
-                    {/* ROW 1 — Title left, status right */}
                     <div className="task-row-1">
                         <h4 className="task-title">{task.title}</h4>
 
@@ -64,12 +62,10 @@ const TaskItem: React.FC<Props> = ({ task, onEdit, onDelete }) => {
                     <p className="task-desc">{task.description}</p>
 
                     <div className="task-row-3">
-                        {/* LEFT: DATE */}
                         <p className="task-date">
                             {formatDate(task.date)}
                         </p>
 
-                        {/* RIGHT: EDIT + DELETE — stays on the right */}
                         {hover && (
                             <div className="task-actions">
                                 <button

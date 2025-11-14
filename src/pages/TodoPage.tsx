@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import TaskList from '../components/TaskList'
-import type { Task, TaskStatus } from '../types/task'
+import type { Task } from '../types/task'
 
 interface Props {
     tasks: Task[]
@@ -13,19 +13,31 @@ interface Props {
 const TodoPage: React.FC<Props> = ({ tasks, onDelete, onUpdate }) => {
     const navigate = useNavigate()
     const [query, setQuery] = useState('')
-    const [filter,] = useState<'All' | TaskStatus | 'Open'>('All')
+    const [filter, setFilter] = useState<"All" | "Completed" | "Incomplete">("All")
 
     const filtered = useMemo(() => {
         let arr = tasks
+
+        // search logic
         if (query.trim()) {
             const q = query.toLowerCase()
-            arr = arr.filter(t => t.title.toLowerCase().includes(q) || t.description?.toLowerCase().includes(q))
+            arr = arr.filter(t =>
+                t.title.toLowerCase().includes(q) ||
+                t.description?.toLowerCase().includes(q)
+            )
         }
-        if (filter === 'All' || filter === 'Open') return arr
-        return arr.filter(t => t.status === filter)
-    }, [tasks, query, filter])
 
-    // We'll compute counts for accordions like in design
+        // filter logic
+        if (filter === "Completed") {
+            return arr.filter(t => t.status === "Completed")
+        }
+        if (filter === "Incomplete") {
+            return arr.filter(t => t.status !== "Completed")
+        }
+
+        return arr
+    }, [tasks, filter])
+
     const counts = useMemo(() => ({
         pending: tasks.filter(t => t.status === 'Pending').length,
         inprogress: tasks.filter(t => t.status === 'In Progress').length,
@@ -40,12 +52,37 @@ const TodoPage: React.FC<Props> = ({ tasks, onDelete, onUpdate }) => {
                     <input className='search-input' placeholder='Search To-Do' value={query} onChange={e => setQuery(e.target.value)} />
                 </div>
 
+                <div className="filter-row">
+                    <button
+                        className={`filter-btn ${filter === "All" ? "active" : ""}`}
+                        onClick={() => setFilter("All")}
+                    >
+                        All
+                    </button>
+
+                    <button
+                        className={`filter-btn ${filter === "Completed" ? "active" : ""}`}
+                        onClick={() => setFilter("Completed")}
+                    >
+                        Completed
+                    </button>
+
+                    <button
+                        className={`filter-btn ${filter === "Incomplete" ? "active" : ""}`}
+                        onClick={() => setFilter("Incomplete")}
+                    >
+                        Incomplete
+                    </button>
+                </div>
+
                 <TaskList
                     tasks={filtered}
                     onEdit={t => navigate(`/edit/${t.id}`)}
                     onDelete={onDelete}
                     onUpdate={onUpdate}
                     counts={counts}
+                    filter={filter}
+                    searchQuery={query}
                 />
 
                 <button className='fab' onClick={() => navigate('/add')}>+</button>

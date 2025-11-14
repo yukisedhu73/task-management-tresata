@@ -76,7 +76,6 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
 
             <div className="container">
 
-                {/* TITLE FIELD */}
                 <div className="form-row">
                     <input
                         className={titleError ? 'input-error' : ''}
@@ -90,7 +89,6 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
                     {titleError && <p className="error-text">{titleError}</p>}
                 </div>
 
-                {/* DESCRIPTION FIELD */}
                 <div className="form-row">
                     <textarea
                         className={descriptionError ? 'input-error' : ''}
@@ -104,8 +102,6 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
                     />
                     {descriptionError && <p className="error-text">{descriptionError}</p>}
                 </div>
-
-                {/* STATUS DROPDOWN ONLY IN EDIT MODE */}
                 {mode === 'edit' && (
                     <div className="form-row">
                         <StatusDropdown value={status} onChange={setStatus} />

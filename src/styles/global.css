@@ -378,6 +378,35 @@ textarea {
     /* prevents collapsing */
 }
 
+.task-card.completed {
+    background: #E8F5E2 !important;
+    /* very light green */
+    border-color: #cde8c0 !important;
+}
+
+.filter-row {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0 20px 0;
+}
+
+.filter-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--primary-blue);
+    background: white;
+    color: var(--primary-blue);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-btn.active {
+    background: var(--primary-blue);
+    color: white;
+}
+
 /* ICON BUTTON */
 .icon-btn {
     background: transparent;
