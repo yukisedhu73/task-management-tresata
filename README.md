@@ -1,73 +1,67 @@
 # React + TypeScript + Vite
+🚀 Tech Stack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript
 
-Currently, two official plugins are available:
+Vite (super-fast dev server)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Pure CSS (no UI frameworks)
 
-## React Compiler
+React Router DOM for navigation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React-Hot-Toast for notifications
 
-## Expanding the ESLint configuration
+# 📥 Clone the Repository
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+git clone https://github.com/yukisedhu73/task-management-tresata.git
+cd task-management-tresata
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# 📦 Install Dependencies
+npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# ▶️ Start Development Server
+npm run dev
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# App runs at:
+http://localhost:5173
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+# 🏗️ Build for Production
+npm run build
+
+# 🔍 Preview Production Build
+npm run preview
+
+
+# ✨ Features Implemented
+
+Add new tasks
+
+Edit existing tasks
+
+Delete tasks (with confirmation modal)
+
+Status update (Pending / In Progress / Completed)
+
+Task filtering: All / Completed / Incomplete
+
+Search across title & description
+
+Hover actions (Edit / Delete icons)
+
+LocalStorage persistence
+
+Completed tasks highlighted with light-green background
+
+Mobile-first responsive UI
+
+
+# ⚠️ Notes
+
+Requires Node.js 22+
+
+No UI libraries used; styling is custom CSS
+
+Data is stored locally (not synced to backend)
