@@ -14,6 +14,7 @@ React-Hot-Toast for notifications
 # 📥 Clone the Repository
 
 git clone https://github.com/yukisedhu73/task-management-tresata.git
+
 cd task-management-tresata
 
 # 📦 Install Dependencies
