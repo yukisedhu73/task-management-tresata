@@ -12,7 +12,7 @@ interface Props {
     onDelete?: (id: string) => void
 }
 
-const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave, onDelete }) => {
+const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave }) => {
     const nav = useNavigate()
     const { id } = useParams()
     const editing = mode === 'edit' && id
@@ -20,8 +20,6 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave, onDelete }) =>
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [status, setStatus] = useState<TaskStatus>('Pending')
-    const [showConfirm, setShowConfirm] = useState(false)
-
     useEffect(() => {
         if (editing) {
             const t = tasks.find(x => x.id === id)
@@ -45,12 +43,6 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave, onDelete }) =>
         }
 
         onSave(normalized)
-        nav('/')
-    }
-
-    const handleDelete = () => {
-        if (!id || !onDelete) return
-        onDelete(id)
         nav('/')
     }
 
@@ -86,32 +78,11 @@ const AddEditPage: React.FC<Props> = ({ mode, tasks = [], onSave, onDelete }) =>
                 <div className="button-row">
                     <button className="btn-outline" onClick={() => nav('/')}>Cancel</button>
                     <div style={{ flex: 1 }}></div>
-
-                    {editing && (
-                        <button className="btn-outline danger" onClick={() => setShowConfirm(true)}>
-                            Delete
-                        </button>
-                    )}
-
                     <button className="btn-primary" onClick={onSubmit}>
                         {mode === 'add' ? 'ADD' : 'Update'}
                     </button>
                 </div>
             </div>
-
-            {/* CUSTOM CONFIRM MODAL */}
-            {showConfirm && (
-                <div className="confirm-overlay">
-                    <div className="confirm-box">
-                        <p>Are you sure you want to delete this task?</p>
-
-                        <div className="confirm-actions">
-                            <button className="btn-outline" onClick={() => setShowConfirm(false)}>Cancel</button>
-                            <button className="btn-primary danger" onClick={handleDelete}>Delete</button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     )
 }

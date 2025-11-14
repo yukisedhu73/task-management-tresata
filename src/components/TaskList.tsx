@@ -26,8 +26,15 @@ const Section: React.FC<{ title: string; count: number; children: React.ReactNod
                     alt="dropdown arrow"
                 />
             </button>
-
-            {open && <div className='section-body'>{children}</div>}
+            {open && (
+                <div className='section-body'>
+                    {React.Children.count(children) > 0 ? (
+                        children
+                    ) : (
+                        <div className="no-task">No tasks found</div>
+                    )}
+                </div>
+            )}
         </div>
     )
 }

@@ -111,7 +111,7 @@ body {
     background: white;
     border-radius: 3px;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    transition:#fff;
+    transition: #fff;
     border: 1px solid transparent;
     /* margin-bottom: 12px; */
 }
@@ -151,11 +151,6 @@ body {
     gap: 12px
 }
 
-.task-title {
-    font-weight: 700;
-    color: var(--primary-blue);
-}
-
 .task-status {
     display: flex;
     align-items: center;
@@ -169,11 +164,6 @@ body {
     height: 10px;
     border-radius: 50%;
     display: inline-block;
-}
-
-.task-desc {
-    margin-top: 8px;
-    color: #374151;
 }
 
 .task-date {
@@ -248,7 +238,7 @@ textarea {
     border-radius: 3px;
 }
 
-.button-row{
+.button-row {
     display: flex;
     justify-content: space-around;
 }
@@ -339,7 +329,7 @@ textarea {
 .task-title {
     color: var(--primary-blue);
     font-weight: 700;
-    margin: 0;
+    margin-top: 10px;
 }
 
 /* Status */
@@ -357,8 +347,8 @@ textarea {
 
 /* Row 2 */
 .task-desc {
-    margin: 30px 0;
-    color: #444;
+    margin: 10px 0 30px 0;
+    color: #374151;
 }
 
 /* ROW 3 layout */
@@ -406,30 +396,37 @@ textarea {
     filter: none;
 }
 
+/* no task  */
+.no-task {
+    text-align: center;
+    padding: 20px 0;
+    color: #777;
+    font-size: 14px;
+}
 
-/* modal */
+/* modal  */
 .confirm-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 200;
 }
 
 .confirm-box {
     background: white;
     padding: 20px;
-    border-radius: 3px;
+    border-radius: 12px;
     width: 80%;
+    max-width: 320px;
+    text-align: center;
 }
 
 .confirm-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 12px;
     margin-top: 20px;
 }

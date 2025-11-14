@@ -13,7 +13,7 @@ interface Props {
 const TodoPage: React.FC<Props> = ({ tasks, onDelete, onUpdate }) => {
     const navigate = useNavigate()
     const [query, setQuery] = useState('')
-    const [filter, setFilter] = useState<'All' | TaskStatus | 'Open'>('All')
+    const [filter,] = useState<'All' | TaskStatus | 'Open'>('All')
 
     const filtered = useMemo(() => {
         let arr = tasks
